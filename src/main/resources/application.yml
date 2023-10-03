@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: strava-weekly
+  main:
+    allow-bean-definition-overriding: true # TODO: Find how to remove this
+  security:
+    oauth2:
+      client:
+        registration:
+          strava:
+            #client-id: ${CLIENT_ID} #SECRET, DO NOT COMMIT TO REPOSITORY
+            #client-secret: ${CLIENT_SECRET} #SECRET, DO NOT COMMIT TO REPOSITORY
+            client-id:
+            client-secret:
+            scope: activity:read_all
+            token-name: access_token
+            authentication-scheme: query
+            client-authentication-scheme: form
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            client-name: Strava
+            redirect-uri: "{baseUrl}/login/oauth2/code/strava"
+        provider:
+          strava:
+            token-uri: https://www.strava.com/oauth/token
+            authorization-uri: https://www.strava.com/oauth/authorize
+            user-info-uri: https://www.strava.com/api/v3/athlete
+            user-name-attribute: id
+server:
+  error:
+    whitelabel:
+      enabled: false
