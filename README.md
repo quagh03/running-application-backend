@@ -1,4 +1,4 @@
-# strava-weekly
+# strava-api
 
 # Configuration
 
