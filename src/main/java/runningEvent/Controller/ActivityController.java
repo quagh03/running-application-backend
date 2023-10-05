@@ -1,12 +1,12 @@
-package runningEvent.StravaAPI;
+package runningEvent.Controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import runningEvent.Service.RequestService;
 
 @RestController
 public class ActivityController {
@@ -27,8 +27,6 @@ public class ActivityController {
         ObjectMapper objectMapper = new ObjectMapper();
         Object jsonObject = objectMapper.readValue(response, Object.class);
 
-        // Return the JSON object as a ResponseEntity
-        System.out.println(jsonObject.toString());
         return new ResponseEntity<>(jsonObject, HttpStatus.OK);
     }catch(Exception e){
         return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,8 +44,6 @@ public class ActivityController {
             ObjectMapper objectMapper = new ObjectMapper();
             Object jsonObject = objectMapper.readValue(response, Object.class);
 
-            // Return the JSON object as a ResponseEntity
-            System.out.println(jsonObject.toString());
             return new ResponseEntity<>(jsonObject, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);

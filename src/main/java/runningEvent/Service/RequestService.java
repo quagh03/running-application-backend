@@ -1,4 +1,4 @@
-package runningEvent.StravaAPI;
+package runningEvent.Service;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

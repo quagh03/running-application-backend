@@ -1,8 +1,10 @@
-package runningEvent.StravaAPI;
+package runningEvent.Controller;
 
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import runningEvent.Service.RequestService;
+import runningEvent.StravaAPI.AthleteToken;
 
 @RestController
 public class AthleteTokenController {
