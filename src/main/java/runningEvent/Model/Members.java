@@ -27,7 +27,7 @@ public class Members {
     private String city;
 
     @Column(name = "StravaId")
-    private long stravaId;
+    private Long stravaId;
 
     @Column(name = "Sex")
     private char sex;
@@ -35,7 +35,7 @@ public class Members {
     @Column(name = "Profile")
     private String profile;
 
-    public Members(int memberId, String username, String password, String firstname, String lastname, String city, long stravaId, char sex, String profile) {
+    public Members(int memberId, String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
         this.memberId = memberId;
         this.username = username;
         this.password = password;
@@ -98,11 +98,11 @@ public class Members {
         this.city = city;
     }
 
-    public long getStravaId() {
+    public Long getStravaId() {
         return stravaId;
     }
 
-    public void setStravaId(long stravaId) {
+    public void setStravaId(Long stravaId) {
         this.stravaId = stravaId;
     }
 

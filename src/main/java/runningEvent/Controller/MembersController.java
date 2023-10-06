@@ -18,7 +18,8 @@ public class MembersController {
     }
 
     @GetMapping("/members")
-    public String getAllMembers(){
-        return "helloworld";
+    public List<Members> getAllMembers(){
+
+        return membersRepository.findAll();
     }
 }

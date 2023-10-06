@@ -24,6 +24,7 @@ spring:
             authentication-scheme: query
             client-authentication-scheme: form
             client-authentication-method: post
+#            authorization-grant-type: authorization_code
             authorization-grant-type: authorization_code
             client-name: Strava
             redirect-uri: "{baseUrl}/login/oauth2/code/strava"
