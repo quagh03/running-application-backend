@@ -1,5 +1,7 @@
 package runningEvent.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,37 +10,52 @@ public class Members {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MemberId")
+    @Column(name = "MemberId", nullable = false, unique = true)
     private int memberId;
 
     @Column(name = "Username", unique = true)
+    @JsonProperty("username")
     private String username;
 
     @Column(name = "Password")
     private String password;
 
+    @JsonProperty("firstname")
     @Column(name = "Firstname")
     private String firstname;
 
+    @JsonProperty("lastname")
     @Column(name = "Lastname")
     private String lastname;
 
+    @JsonProperty("city")
     @Column(name = "City")
     private String city;
 
-    @Column(name = "StravaId")
+    @JsonProperty("id")
+    @Column(name = "strava_id", unique = true)
     private Long stravaId;
 
+    @JsonProperty("sex")
     @Column(name = "Sex")
     private char sex;
 
+    @JsonProperty("profile")
     @Column(name = "Profile")
     private String profile;
 
-    public Members(int memberId, String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
-        this.memberId = memberId;
+    public Members(String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
         this.username = username;
         this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.city = city;
+        this.stravaId = stravaId;
+        this.sex = sex;
+        this.profile = profile;
+    }
+
+    public Members(String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.city = city;
