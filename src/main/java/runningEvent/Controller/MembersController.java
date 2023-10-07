@@ -44,4 +44,20 @@ public class MembersController {
     public Members addMember(@RequestBody Members members){
         return membersRepository.save(members);
     }
+
+    @DeleteMapping("/public/members/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+        try {
+            Optional<Members> member = membersRepository.findById(id);
+            if (member.isPresent()) {
+                membersRepository.deleteById(id);
+                return ResponseEntity.ok("Deleted member: " + id);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
+    }
 }

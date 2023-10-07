@@ -5,43 +5,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Members")
+@Table(name = "members")
 public class Members {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MemberId", nullable = false, unique = true)
+    @Column(name = "member_id", nullable = false, unique = true)
     private int memberId;
 
-    @Column(name = "Username", unique = true)
-    @JsonProperty("username")
+    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "Password")
+    @Column(name = "user_password")
     private String password;
 
-    @JsonProperty("firstname")
-    @Column(name = "Firstname")
+    @Column(name = "firstname")
     private String firstname;
 
-    @JsonProperty("lastname")
-    @Column(name = "Lastname")
+    @Column(name = "lastname")
     private String lastname;
 
-    @JsonProperty("city")
-    @Column(name = "City")
+    @Column(name = "city")
     private String city;
 
-    @JsonProperty("id")
     @Column(name = "strava_id", unique = true)
     private Long stravaId;
 
-    @JsonProperty("sex")
-    @Column(name = "Sex")
+    @Column(name = "sex")
     private char sex;
 
-    @JsonProperty("profile")
-    @Column(name = "Profile")
+    @Column(name = "user_profile")
     private String profile;
 
     public Members(String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
