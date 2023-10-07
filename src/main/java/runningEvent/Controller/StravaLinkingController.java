@@ -13,6 +13,8 @@ import runningEvent.Model.Members;
 import runningEvent.Repository.MembersRepository;
 import runningEvent.Service.RequestService;
 
+import java.util.Optional;
+
 @RestController
 public class StravaLinkingController {
     private final RequestService requestService;
@@ -25,31 +27,34 @@ public class StravaLinkingController {
     }
 
     @RequestMapping("/linkwithstrava")
-    public ResponseEntity<Object> linkWithStrava(final OAuth2AuthenticationToken auth){
-        final String url = String.format("https://www.strava.com/api/v3/athlete");
+    public ResponseEntity<Object> linkWithStrava(final OAuth2AuthenticationToken auth) {
+        final String url = "https://www.strava.com/api/v3/athlete";
 
-        String response = requestService.sendGetRequest(auth, url).getBody();
-
-        try{
+        try {
+            String response = requestService.sendGetRequest(auth, url).getBody();
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response);
 
-            String firstname = jsonNode.get("firstname").asText();
-            String lastname = jsonNode.get("lastname").asText();
-            String city = jsonNode.get("city").asText();
-            char sex = jsonNode.get("sex").asText().charAt(0);
-            String profile = jsonNode.get("profile").asText();
-            Long StravaId = jsonNode.get("id").asLong();
+            String firstname = getNodeText(jsonNode, "firstname");
+            String lastname = getNodeText(jsonNode, "lastname");
+            String city = getNodeText(jsonNode, "city");
+            char sex = getNodeText(jsonNode, "sex").charAt(0);
+            String profile = getNodeText(jsonNode, "profile");
+            Long stravaId = jsonNode.get("id").asLong();
 
-            Members tempMembers = new Members(firstname, lastname, city, StravaId, sex, profile);
+            Members tempMembers = new Members(firstname, lastname, city, stravaId, sex, profile);
+            membersRepository.save(tempMembers);
 
-            System.out.println(tempMembers.getFirstname());
-
-            return new ResponseEntity<>(StravaId, HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.ok("added");
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
+    }
 
+    private String getNodeText(JsonNode jsonNode, String fieldName) {
+        return Optional.ofNullable(jsonNode.get(fieldName)).map(JsonNode::asText).orElse("");
     }
 
 
