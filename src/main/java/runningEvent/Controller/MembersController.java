@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import runningEvent.Model.Members;
 import runningEvent.Repository.MembersRepository;
+import runningEvent.Service.MembersService;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,22 +15,22 @@ import java.util.Optional;
 
 @RestController
 public class MembersController {
-    private final MembersRepository membersRepository;
+    private final MembersService membersService;
 
     @Autowired
-    public MembersController(MembersRepository membersRepository) {
-        this.membersRepository = membersRepository;
+    public MembersController(MembersService membersService) {
+        this.membersService = membersService;
     }
 
     @GetMapping("/public/members")
     public List<Members> getAllMembers(){
-        return membersRepository.findAll();
+        return membersService.getAllMembers();
     }
 
     @GetMapping("/public/members/{id}")
     public ResponseEntity<?> getMemberById(@PathVariable Integer id){
         try{
-            Optional<Members> member = membersRepository.findById(id);
+            Optional<Members> member = membersService.getMemberById(id);
             if(member.isPresent()){
                 return ResponseEntity.ok(member.get());
             }else{
@@ -42,15 +43,15 @@ public class MembersController {
 
     @PostMapping("/public/members")
     public Members addMember(@RequestBody Members members){
-        return membersRepository.save(members);
+        return membersService.saveMember(members);
     }
 
     @DeleteMapping("/public/members/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Integer id) {
         try {
-            Optional<Members> member = membersRepository.findById(id);
+            Optional<Members> member = membersService.getMemberById(id);
             if (member.isPresent()) {
-                membersRepository.deleteById(id);
+                membersService.deleteMemberById(id);
                 return ResponseEntity.ok("Deleted member: " + id);
             } else {
                 return ResponseEntity.notFound().build();
