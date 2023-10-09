@@ -43,4 +43,8 @@ public class MembersService {
 
         membersRepository.save(tempMember);
     }
+
+    public Optional<Members> getMemberByStravaId(Long id){
+        return membersRepository.findByStravaId(id);
+    }
 }

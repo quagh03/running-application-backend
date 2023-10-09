@@ -21,7 +21,7 @@ public class StravaLinkingController {
     public ResponseEntity<Object> linkWithStrava(final OAuth2AuthenticationToken auth){
         try {
             stravaLinkingService.linkWithStrava(auth);
-            return ResponseEntity.ok("Added");
+            return ResponseEntity.ok("Linked");
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred " + e.getMessage());
