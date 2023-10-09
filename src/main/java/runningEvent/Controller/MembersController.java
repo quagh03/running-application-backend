@@ -61,4 +61,15 @@ public class MembersController {
                     .body("Error: " + e.getMessage());
         }
     }
+
+    @PutMapping("/public/members/{id}")
+    public ResponseEntity<String> updateMember(@PathVariable Integer id, @RequestBody Members memberDetail){
+        try{
+            membersService.updateMember(id, memberDetail);
+            return ResponseEntity.ok("Updated member: " + id);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
+    }
 }

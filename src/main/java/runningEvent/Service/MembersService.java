@@ -1,6 +1,8 @@
 package runningEvent.Service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import runningEvent.Model.Members;
 import runningEvent.Repository.MembersRepository;
@@ -31,5 +33,14 @@ public class MembersService {
 
     public void deleteMemberById(Integer id){
         membersRepository.deleteById(id);
+    }
+
+    public void updateMember(Integer id, Members memberDetail){
+        Members tempMember = membersRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee not exist with id: " + id));
+
+        BeanUtils.copyProperties(memberDetail, tempMember, "id");
+
+        membersRepository.save(tempMember);
     }
 }
