@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 import runningEvent.Service.StravaLinkingService;
 
 @RestController
@@ -18,9 +19,20 @@ public class StravaLinkingController {
     }
 
     @RequestMapping("/linkwithstrava")
-    public ResponseEntity<Object> linkWithStrava(final OAuth2AuthenticationToken auth){
+    public RedirectView linkMemberWithStrava(final OAuth2AuthenticationToken auth){
         try {
-            stravaLinkingService.linkWithStrava(auth);
+            stravaLinkingService.linkMemberWithStrava(auth);
+            return new RedirectView("/linkactivities");
+        }catch (Exception e){
+            e.printStackTrace();
+            return new RedirectView("/error");
+        }
+    }
+
+    @RequestMapping("/linkactivities")
+    public ResponseEntity<Object> linkActivitiesWithStrava(final OAuth2AuthenticationToken auth){
+        try {
+            stravaLinkingService.getActivityStrava(auth);
             return ResponseEntity.ok("Linked");
         }catch (Exception e){
             e.printStackTrace();

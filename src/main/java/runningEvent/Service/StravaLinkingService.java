@@ -3,27 +3,36 @@ package runningEvent.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
+import runningEvent.Model.Activities;
 import runningEvent.Model.Members;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StravaLinkingService {
     private final RequestService requestService;
     private final MembersService membersService;
+    private final ActivitiesService activitiesService;
 
     @Autowired
-    public StravaLinkingService(RequestService requestService, MembersService membersService){
+    public StravaLinkingService(RequestService requestService, MembersService membersService, ActivitiesService activitiesService){
         this.requestService = requestService;
         this.membersService = membersService;
+        this.activitiesService = activitiesService;
     }
 
-    public void linkWithStrava(OAuth2AuthenticationToken auth) throws Exception{
-        final String url = "https://www.strava.com/api/v3/athlete";
+    public void linkMemberWithStrava(OAuth2AuthenticationToken auth) throws Exception{
+        final String MemberUrl = "https://www.strava.com/api/v3/athlete";
 
-        String response = requestService.sendGetRequest(auth, url).getBody();
+        String response = requestService.sendGetRequest(auth, MemberUrl).getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response);
 
@@ -45,6 +54,35 @@ public class StravaLinkingService {
         }else{
             membersService.saveMember(memberDetail);
         }
+    }
+
+    public void getActivityStrava(OAuth2AuthenticationToken auth) throws Exception{
+        final String url = "https://www.strava.com/api/v3/athlete/activities";
+
+        String response = requestService.sendGetRequest(auth, url).getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(response);
+
+        List<Activities> activitiesList = new ArrayList<>();
+
+        for (JsonNode activity : jsonNode) {
+            long stravaId = activity.get("id").asLong();
+            if(!activitiesService.existsByActivitiesStravaId(stravaId)){
+                Activities newActivity = new Activities();
+                newActivity.setActivitiesStravaId(stravaId);
+                newActivity.setActivityName(activity.get("name").asText());
+                newActivity.setDistance(BigDecimal.valueOf(activity.get("distance").asDouble()));
+                newActivity.setActivitiesType(activity.get("type").asText());
+                newActivity.setStravaId(activity.get("athlete").get("id").asLong());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                Date startDate = dateFormat.parse(activity.get("start_date").asText());
+                newActivity.setStartDate(startDate);
+
+                activitiesList.add(newActivity);
+            }
+        }
+        activitiesService.saveAllActivities(activitiesList);
 
     }
 

@@ -20,6 +20,8 @@ public class ActivitiesService {
 
     public Activities saveActivities(Activities activities){return activitiesRepository.save(activities);}
 
+    public List<Activities> saveAllActivities(List<Activities> activitiesList){return activitiesRepository.saveAll(activitiesList);}
+
     public void updateActivities(Integer id, Activities activitiesDetail){
         Activities tempActivity = activitiesRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Activity not exist with id: " + id));
@@ -28,4 +30,6 @@ public class ActivitiesService {
 
         activitiesRepository.save(tempActivity);
     }
+
+    public boolean existsByActivitiesStravaId(Long stravaId){return activitiesRepository.existsByActivitiesStravaId(stravaId);}
 }

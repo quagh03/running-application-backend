@@ -50,6 +50,16 @@ public class Activities {
         this.members = members;
     }
 
+    public Activities(int activitiesId, long activitiesStravaId, String activityName, BigDecimal distance, String activitiesType, Long stravaId, Date startDate) {
+        this.activitiesId = activitiesId;
+        this.activitiesStravaId = activitiesStravaId;
+        this.activityName = activityName;
+        this.distance = distance;
+        this.activitiesType = activitiesType;
+        this.stravaId = stravaId;
+        this.startDate = startDate;
+    }
+
     public int getActivitiesId() {
         return activitiesId;
     }
