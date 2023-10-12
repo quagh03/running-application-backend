@@ -10,7 +10,7 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
   security:
     oauth2:

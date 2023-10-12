@@ -3,33 +3,31 @@ package runningEvent.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import runningEvent.Model.Members;
-import runningEvent.Repository.MembersRepository;
+import runningEvent.Service.MembersService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class MembersController {
-    private final MembersRepository membersRepository;
+    private final MembersService membersService;
 
     @Autowired
-    public MembersController(MembersRepository membersRepository) {
-        this.membersRepository = membersRepository;
+    public MembersController(MembersService membersService) {
+        this.membersService = membersService;
     }
 
-    @GetMapping("/members")
+    @GetMapping("/public/members")
     public List<Members> getAllMembers(){
-        return membersRepository.findAll();
+        return membersService.getAllMembers();
     }
 
     @GetMapping("/public/members/{id}")
     public ResponseEntity<?> getMemberById(@PathVariable Integer id){
         try{
-            Optional<Members> member = membersRepository.findById(id);
+            Optional<Members> member = membersService.getMemberById(id);
             if(member.isPresent()){
                 return ResponseEntity.ok(member.get());
             }else{
@@ -37,6 +35,38 @@ public class MembersController {
             }
         }catch(Exception e){
             return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/public/members")
+    public Members addMember(@RequestBody Members members){
+        return membersService.saveMember(members);
+    }
+
+    @DeleteMapping("/public/members/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+        try {
+            Optional<Members> member = membersService.getMemberById(id);
+            if (member.isPresent()) {
+                membersService.deleteMemberById(id);
+                return ResponseEntity.ok("Deleted member: " + id);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/public/members/{id}")
+    public ResponseEntity<String> updateMember(@PathVariable Integer id, @RequestBody Members memberDetail){
+        try{
+            membersService.updateMember(id, memberDetail);
+            return ResponseEntity.ok("Updated member: " + id);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
         }
     }
 }
