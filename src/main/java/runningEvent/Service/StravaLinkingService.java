@@ -2,12 +2,10 @@ package runningEvent.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import runningEvent.Model.Members;
-import runningEvent.Repository.MembersRepository;
 
 import java.util.Optional;
 
@@ -47,7 +45,6 @@ public class StravaLinkingService {
         }else{
             membersService.saveMember(memberDetail);
         }
-
 
     }
 

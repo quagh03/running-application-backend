@@ -1,8 +1,8 @@
 package runningEvent.Model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "members")
@@ -37,7 +37,14 @@ public class Members {
     @Column(name = "user_profile")
     private String profile;
 
-    public Members(String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
+    @OneToMany(mappedBy = "members")
+    private List<Activities> activities;
+
+    @OneToMany(mappedBy = "members")
+    private List<EventSession> eventSessions;
+
+    public Members(int memberId, String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile, List<Activities> activities, List<EventSession> eventSessions) {
+        this.memberId = memberId;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
@@ -46,6 +53,8 @@ public class Members {
         this.stravaId = stravaId;
         this.sex = sex;
         this.profile = profile;
+        this.activities = activities;
+        this.eventSessions = eventSessions;
     }
 
     public Members(String firstname, String lastname, String city, Long stravaId, char sex, String profile) {
@@ -132,9 +141,25 @@ public class Members {
         this.profile = profile;
     }
 
+    public List<Activities> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activities> activities) {
+        this.activities = activities;
+    }
+
+    public List<EventSession> getEventSessions() {
+        return eventSessions;
+    }
+
+    public void setEventSessions(List<EventSession> eventSessions) {
+        this.eventSessions = eventSessions;
+    }
+
     @Override
     public String toString() {
-        return "Member{" +
+        return "Members{" +
                 "memberId=" + memberId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -144,6 +169,8 @@ public class Members {
                 ", stravaId=" + stravaId +
                 ", sex=" + sex +
                 ", profile='" + profile + '\'' +
+                ", activities=" + activities +
+                ", eventSessions=" + eventSessions +
                 '}';
     }
 }
