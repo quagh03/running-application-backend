@@ -12,17 +12,14 @@ public class EventSession {
     @Column(name = "session_id")
     private int sessionId;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private RunningEvent event;
+    @Column(name = "event_id")
+    private Integer eventId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Members members;
+    @Column(name = "member_id")
+    private Integer memberId;
 
-    @ManyToOne
-    @JoinColumn(name = "activities_id")
-    private Activities activity;
+    @Column(name = "activities_id")
+    private Integer activityId;
 
     @Column(name = "session_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,16 +28,16 @@ public class EventSession {
     @Column(name = "distance", precision = 10, scale = 2)
     private BigDecimal distance;
 
-    public EventSession(int sessionId, RunningEvent event, Members members, Activities activity, Date sessionDate, BigDecimal distance) {
-        this.sessionId = sessionId;
-        this.event = event;
-        this.members = members;
-        this.activity = activity;
-        this.sessionDate = sessionDate;
-        this.distance = distance;
+    public EventSession() {
     }
 
-    public EventSession() {
+    public EventSession(int sessionId, Integer eventId, Integer memberId, Integer activityId, Date sessionDate, BigDecimal distance) {
+        this.sessionId = sessionId;
+        this.eventId = eventId;
+        this.memberId = memberId;
+        this.activityId = activityId;
+        this.sessionDate = sessionDate;
+        this.distance = distance;
     }
 
     public int getSessionId() {
@@ -51,28 +48,28 @@ public class EventSession {
         this.sessionId = sessionId;
     }
 
-    public RunningEvent getEvent() {
-        return event;
+    public Integer getEventId() {
+        return eventId;
     }
 
-    public void setEvent(RunningEvent event) {
-        this.event = event;
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
     }
 
-    public Members getMembers() {
-        return members;
+    public Integer getMemberId() {
+        return memberId;
     }
 
-    public void setMembers(Members members) {
-        this.members = members;
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
-    public Activities getActivity() {
-        return activity;
+    public Integer getActivityId() {
+        return activityId;
     }
 
-    public void setActivity(Activities activity) {
-        this.activity = activity;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
     public Date getSessionDate() {
@@ -95,9 +92,9 @@ public class EventSession {
     public String toString() {
         return "EventSession{" +
                 "sessionId=" + sessionId +
-                ", event=" + event +
-                ", members=" + members +
-                ", activity=" + activity +
+                ", eventId=" + eventId +
+                ", memberId=" + memberId +
+                ", activityId=" + activityId +
                 ", sessionDate=" + sessionDate +
                 ", distance=" + distance +
                 '}';
