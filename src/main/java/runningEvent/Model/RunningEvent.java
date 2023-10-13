@@ -30,9 +30,6 @@ public class RunningEvent {
     @Column(name = "km", precision = 10, scale = 2)
     private BigDecimal km;
 
-    @OneToMany(mappedBy = "event")
-    private List<EventSession> eventSessions;
-
     public RunningEvent() {
     }
 
@@ -43,7 +40,6 @@ public class RunningEvent {
         this.endDate = endDate;
         this.participant = participant;
         this.km = km;
-        this.eventSessions = eventSessions;
     }
 
     public int getEventId() {
@@ -94,14 +90,6 @@ public class RunningEvent {
         this.km = km;
     }
 
-    public List<EventSession> getEventSessions() {
-        return eventSessions;
-    }
-
-    public void setEventSessions(List<EventSession> eventSessions) {
-        this.eventSessions = eventSessions;
-    }
-
     @Override
     public String toString() {
         return "RunningEvent{" +
@@ -111,7 +99,6 @@ public class RunningEvent {
                 ", endDate=" + endDate +
                 ", participant=" + participant +
                 ", km=" + km +
-                ", eventSessions=" + eventSessions +
                 '}';
     }
 }

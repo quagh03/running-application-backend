@@ -2,12 +2,13 @@ package runningEvent.Model;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "activities")
-public class Activities {
+public class Activities implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "activities_id")
@@ -32,10 +33,6 @@ public class Activities {
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    @ManyToOne
-    @JoinColumn(name = "strava_id", referencedColumnName = "strava_id", insertable = false, updatable = false)
-    private Members members;
-
     public Activities() {
     }
 
@@ -47,7 +44,6 @@ public class Activities {
         this.activitiesType = activitiesType;
         this.stravaId = stravaId;
         this.startDate = startDate;
-        this.members = members;
     }
 
     public Activities(int activitiesId, long activitiesStravaId, String activityName, BigDecimal distance, String activitiesType, Long stravaId, Date startDate) {
@@ -116,14 +112,6 @@ public class Activities {
         this.startDate = startDate;
     }
 
-    public Members getMember() {
-        return members;
-    }
-
-    public void setMember(Members member) {
-        this.members = member;
-    }
-
     @Override
     public String toString() {
         return "Activites{" +
@@ -134,7 +122,6 @@ public class Activities {
                 ", activitiesType='" + activitiesType + '\'' +
                 ", stravaId=" + stravaId +
                 ", startDate=" + startDate +
-                ", member=" + members +
                 '}';
     }
 }
