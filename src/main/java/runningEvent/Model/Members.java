@@ -36,6 +36,9 @@ public class Members{
     @Column(name = "user_profile")
     private String profile;
 
+    @OneToMany(mappedBy = "members", cascade = CascadeType.ALL)
+    private List<Authority> authorities;
+
     public Members(int memberId, String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile, List<Activities> activities, List<EventSession> eventSessions) {
         this.memberId = memberId;
         this.username = username;
@@ -55,6 +58,19 @@ public class Members{
         this.stravaId = stravaId;
         this.sex = sex;
         this.profile = profile;
+    }
+
+    public Members(int memberId, String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile, List<Authority> authorities) {
+        this.memberId = memberId;
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.city = city;
+        this.stravaId = stravaId;
+        this.sex = sex;
+        this.profile = profile;
+        this.authorities = authorities;
     }
 
     public Members() {
@@ -130,6 +146,14 @@ public class Members{
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override

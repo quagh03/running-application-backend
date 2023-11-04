@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface MembersRepository extends JpaRepository<Members, Integer> {
     Optional<Members> findByStravaId(Long stravaid);
+
+    Members findByUsername(String username);
 }

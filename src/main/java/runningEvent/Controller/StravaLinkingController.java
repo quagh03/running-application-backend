@@ -22,11 +22,11 @@ public class StravaLinkingController {
     public RedirectView linkMemberWithStrava(final OAuth2AuthenticationToken auth){
         try {
             stravaLinkingService.linkMemberWithStrava(auth);
-            return new RedirectView("/linkactivities");
         }catch (Exception e){
             e.printStackTrace();
             return new RedirectView("/error");
         }
+        return new RedirectView("/linkactivities");
     }
 
     @RequestMapping("/linkactivities")

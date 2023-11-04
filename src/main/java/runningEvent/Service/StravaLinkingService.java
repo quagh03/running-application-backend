@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 import runningEvent.Model.Activities;
 import runningEvent.Model.Members;
 
@@ -29,7 +30,7 @@ public class StravaLinkingService {
         this.activitiesService = activitiesService;
     }
 
-    public void linkMemberWithStrava(OAuth2AuthenticationToken auth) throws Exception{
+    public RedirectView linkMemberWithStrava(OAuth2AuthenticationToken auth) throws Exception{
         final String MemberUrl = "https://www.strava.com/api/v3/athlete";
 
         String response = requestService.sendGetRequest(auth, MemberUrl).getBody();
@@ -53,7 +54,10 @@ public class StravaLinkingService {
             membersService.updateMember(id, memberDetail);
         }else{
             membersService.saveMember(memberDetail);
+            tempMember = membersService.getMemberById(memberDetail.getMemberId());
+            return new RedirectView("/usernamepassword/" + tempMember.get().getMemberId());
         }
+        return new RedirectView("/linkactivities");
     }
 
     public void getActivityStrava(OAuth2AuthenticationToken auth) throws Exception{
