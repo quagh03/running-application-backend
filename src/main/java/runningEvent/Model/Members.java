@@ -15,6 +15,9 @@ public class Members{
     @Column(name = "username", unique = true)
     private String username;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "user_password")
     private String password;
 
@@ -39,9 +42,10 @@ public class Members{
     @OneToMany(mappedBy = "members", cascade = CascadeType.ALL)
     private List<Authority> authorities;
 
-    public Members(int memberId, String username, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile, List<Activities> activities, List<EventSession> eventSessions) {
+    public Members(int memberId, String username, String email, String password, String firstname, String lastname, String city, Long stravaId, char sex, String profile, List<Activities> activities, List<EventSession> eventSessions) {
         this.memberId = memberId;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;

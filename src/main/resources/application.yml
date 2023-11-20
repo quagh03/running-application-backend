@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/running_event
     username: root
-    password:
+    password: Lequanghuy2212!
   jpa:
     hibernate:
       ddl-auto: none
@@ -17,8 +17,8 @@ spring:
       client:
         registration:
           strava:
-            client-id:
-            client-secret:
+            client-id: 113829
+            client-secret: bf7832c60bdd88054908fef54231d6db7c9b193a
             scope: activity:read_all
             token-name: access_token
             authentication-scheme: query

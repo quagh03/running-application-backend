@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 import runningEvent.Service.StravaLinkingService;
+import runningEvent.Service.StravaLinkingServiceImpl;
 
 @RestController
 public class StravaLinkingController {
     private final StravaLinkingService stravaLinkingService;
 
     @Autowired
-    public StravaLinkingController(StravaLinkingService stravaLinkingService){
-        this.stravaLinkingService = stravaLinkingService;
+    public StravaLinkingController(StravaLinkingServiceImpl stravaLinkingServiceImpl){
+        this.stravaLinkingService = stravaLinkingServiceImpl;
     }
 
     @RequestMapping("/linkwithstrava")
@@ -23,7 +24,6 @@ public class StravaLinkingController {
         try {
             stravaLinkingService.linkMemberWithStrava(auth);
         }catch (Exception e){
-            e.printStackTrace();
             return new RedirectView("/error");
         }
         return new RedirectView("/linkactivities");
@@ -35,7 +35,6 @@ public class StravaLinkingController {
             stravaLinkingService.getActivityStrava(auth);
             return ResponseEntity.ok("Linked");
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred " + e.getMessage());
         }
     }
