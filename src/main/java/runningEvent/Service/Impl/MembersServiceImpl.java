@@ -1,4 +1,4 @@
-package runningEvent.Service;
+package runningEvent.Service.Impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import runningEvent.Model.Members;
 import runningEvent.Repository.MembersRepository;
+import runningEvent.Service.MembersService;
 
 import java.util.List;
 import java.util.Optional;

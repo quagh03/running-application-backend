@@ -1,4 +1,4 @@
-package runningEvent.Service;
+package runningEvent.Service.Impl;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import runningEvent.Service.RequestService;
 
 @Service
 public class RequestServiceImpl implements RequestService {

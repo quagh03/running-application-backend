@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 import runningEvent.Service.StravaLinkingService;
-import runningEvent.Service.StravaLinkingServiceImpl;
+import runningEvent.Service.Impl.StravaLinkingServiceImpl;
 
 @RestController
 public class StravaLinkingController {

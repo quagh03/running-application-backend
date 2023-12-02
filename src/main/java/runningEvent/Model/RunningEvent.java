@@ -1,4 +1,7 @@
 package runningEvent.Model;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -6,12 +9,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "running_events")
+@JsonInclude(JsonInclude.Include.NON_NULL) // This will ignore all null fields
 public class RunningEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
-    private int eventId;
+    private Integer eventId;
 
     @Column(name = "event_name")
     private String eventName;
@@ -25,21 +29,23 @@ public class RunningEvent {
     private Date endDate;
 
     @Column(name = "participant")
-    private int participant;
+    @JsonProperty("participant")
+    private Integer participant;
 
-    @Column(name = "km", precision = 10, scale = 2)
-    private BigDecimal km;
+    @Column(name = "total_distance", precision = 10, scale = 2)
+    private BigDecimal total_distance;
+
 
     public RunningEvent() {
     }
 
-    public RunningEvent(int eventId, String eventName, Date startDate, Date endDate, int participant, BigDecimal km, List<EventSession> eventSessions) {
+    public RunningEvent(Integer eventId, String eventName, Date startDate, Date endDate, Integer participant, BigDecimal total_distance) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.participant = participant;
-        this.km = km;
+        this.total_distance = total_distance;
     }
 
     public int getEventId() {
@@ -74,20 +80,16 @@ public class RunningEvent {
         this.endDate = endDate;
     }
 
-    public int getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(int participant) {
+    public void setParticipant(Integer participant) {
         this.participant = participant;
     }
 
-    public BigDecimal getKm() {
-        return km;
+    public BigDecimal getTotal_distance() {
+        return total_distance;
     }
 
-    public void setKm(BigDecimal km) {
-        this.km = km;
+    public void setTotal_distance(BigDecimal total_distance) {
+        this.total_distance = total_distance;
     }
 
     @Override
@@ -98,7 +100,7 @@ public class RunningEvent {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", participant=" + participant +
-                ", km=" + km +
+                ", total_distance=" + total_distance +
                 '}';
     }
 }
