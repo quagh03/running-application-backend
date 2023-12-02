@@ -10,7 +10,7 @@ public class EventSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "session_id")
-    private int sessionId;
+    private Integer sessionId;
 
     @Column(name = "event_id")
     private Integer eventId;
