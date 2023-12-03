@@ -43,4 +43,13 @@ public class EventSessionServiceImpl implements EventSessionService {
             throw new RuntimeException("Error", e);
         }
     }
+
+    @Override
+    public List<EventSession> getEventSessionByStravaId(Long stravaId){
+        try {
+            return eventSessionRepository.findByActivities_StravaId(stravaId);
+        }catch (Exception e){
+            throw new RuntimeException("Error", e);
+        }
+    }
 }

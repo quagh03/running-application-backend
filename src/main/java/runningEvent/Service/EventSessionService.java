@@ -10,4 +10,6 @@ public interface EventSessionService {
     EventSession addEventSession(EventSession eventSession);
 
     void deleteEventSession(Integer eventSessionId);
+
+    List<EventSession> getEventSessionByStravaId(Long stravaId);
 }

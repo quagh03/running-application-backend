@@ -41,4 +41,13 @@ public class EventSessionController {
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/public/eventsessions/{stravaid}")
+    public ResponseEntity<?> getByStravaId(@PathVariable Long stravaid){
+        try{
+            return new ResponseEntity<>(eventSessionService.getEventSessionByStravaId(stravaid), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

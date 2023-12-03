@@ -15,15 +15,22 @@ public class EventSession {
     @Column(name = "event_id")
     private Integer eventId;
 
-    @Column(name = "activities_id", unique = true)
-    private Integer activityId;
+    @ManyToOne
+    @JoinColumn(name = "activities_id")
+    private Activities activities;
 
     public EventSession() {
     }
 
+    public EventSession(Integer sessionId, Integer eventId, Activities activities) {
+        this.sessionId = sessionId;
+        this.eventId = eventId;
+        this.activities = activities;
+    }
+
     public EventSession(Integer eventId, Integer activityId) {
         this.eventId = eventId;
-        this.activityId = activityId;
+//        this.activityId = activityId;
     }
 
     public int getSessionId() {
@@ -42,11 +49,15 @@ public class EventSession {
         this.eventId = eventId;
     }
 
-    public Integer getActivityId() {
-        return activityId;
+    public void setSessionId(Integer sessionId) {
+        this.sessionId = sessionId;
     }
 
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
+    public Activities getActivities() {
+        return activities;
+    }
+
+    public void setActivities(Activities activities) {
+        this.activities = activities;
     }
 }
