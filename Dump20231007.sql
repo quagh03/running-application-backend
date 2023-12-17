@@ -60,6 +60,7 @@ CREATE TABLE `eventsession` (
                                 CONSTRAINT `eventsession_ibfk_3` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`activities_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+USE running_event;
 DELIMITER //
 
 CREATE TRIGGER update_running_event_metrics
@@ -82,7 +83,7 @@ BEGIN
     -- Update the participant and km columns in the running_events table
     UPDATE running_events
     SET participant = total_participant,
-        km = total_distance
+        total_distance = total_distance
     WHERE event_id = NEW.event_id;
 END //
 
